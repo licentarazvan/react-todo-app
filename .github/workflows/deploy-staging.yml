@@ -15,6 +15,8 @@ jobs:
         STAGING_S3_BUCKET: ${{ secrets.STAGING_S3_BUCKET }}
         STAGING_CLOUDFRONT_ID: ${{ secrets.STAGING_CLOUDFRONT_ID }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
