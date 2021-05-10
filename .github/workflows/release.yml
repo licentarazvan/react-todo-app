@@ -48,3 +48,8 @@ jobs:
       - name: Push artifact
         run:
           aws s3 cp artifact.zip s3://$S3_BUILDS_BUCKET
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact.zip
+          path: artifact.zip
