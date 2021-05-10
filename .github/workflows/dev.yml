@@ -51,7 +51,6 @@ jobs:
           print(datastore["version"])
           EOF
           )" >> $GITHUB_ENV
-          exit 0
      - name: print app version
        run:
          echo $app_version
