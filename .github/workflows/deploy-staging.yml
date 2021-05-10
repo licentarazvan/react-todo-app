@@ -21,12 +21,16 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-1
+      - name: Get the app version
+        id: get-tag-version
+        run: |
+          app_version=$(cat staging-version.txt); echo "app_version=${app_version}" >> $GITHUB_ENV
       - name: Download artifact
         run:
-          aws s3 cp s3://$S3_BUILDS_BUCKET/artifact.zip .
+          aws s3 cp s3://$S3_BUILDS_BUCKET/$app_version.zip .
       - name: Unzip artifact
         run:
-          unzip artifact.zip
+          unzip $app_version.zip
       - name: Deploy app to staging
         run:
           aws s3 sync build/ s3://$STAGING_S3_BUCKET --delete
