@@ -31,7 +31,7 @@ jobs:
           echo $app_version
       - name: Create release tag if needed
         run:
-          if [[ $app_version != *-dev ]]; then
+          if ! [[ "$app_version" == *"-dev" ]]; then
             git tag -a v$app_version -m "Release v$app_version"
             git push origin v$app_version
           fi
