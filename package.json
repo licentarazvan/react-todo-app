@@ -1,6 +1,6 @@
 {
   "name": "react-todo-app",
-  "version": "0.2.0-dev",
+  "version": "0.2.0",
   "private": true,
   "devDependencies": {
     "react-scripts": "4.0.3"
