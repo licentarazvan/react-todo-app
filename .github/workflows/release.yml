@@ -53,3 +53,11 @@ jobs:
         with:
           name: artifact.zip
           path: artifact.zip
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: https://github.com/licentarazvan/react-todo-app/archive/refs/tags/
+          asset_path: ./artifact.zip
+          asset_name: app-artifact.zip
+          asset_content_type: application/zip
