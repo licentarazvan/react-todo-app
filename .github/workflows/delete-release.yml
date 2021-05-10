@@ -16,11 +16,11 @@ jobs:
       - name: Get the tag version
         id: get-tag-version
         run: |
-          tag-version=$(cat version.txt); echo "tag-version=${tag-version}" >> $GITHUB_ENV
+          tag_version=$(cat version.txt); echo "tag_version=${tag_version}" >> $GITHUB_ENV
       - uses: dev-drprasad/delete-tag-and-release@v0.2.0
         id: delete-tag-and-release
         with:
           delete_release: true # default: false
-          tag_name: ${{ env.tag-version }}
+          tag_name: ${{ env.tag_version }}
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
