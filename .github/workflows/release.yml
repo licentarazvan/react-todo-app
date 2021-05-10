@@ -46,7 +46,7 @@ jobs:
           key: ${{ github.sha }}
       - name: Read app version
         run: |
-          app_version=$(cat package.json | jq -r '.version'); echo "export app_version=$app_version" >> $GITHUB_ENV
+          app_version=$(cat package.json | jq -r '.version'); echo "app_version=$app_version" >> $GITHUB_ENV
       - name: Create artifact
         run:
           zip -r $app_version.zip ./build
