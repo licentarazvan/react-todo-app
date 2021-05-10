@@ -32,8 +32,8 @@ jobs:
       - uses: actions-ecosystem/action-push-tag@v1
         if: ${{ ! contains(env.app_version, 'dev') }}
         with:
-          tag: v$app_version
-          message: "Release v$app_version"
+          tag: v${{ env.app_version }}
+          message: "Release v${{ env.app_version }}"
   deploy-dev:
     name: Deploy app dev
     runs-on: ubuntu-latest
