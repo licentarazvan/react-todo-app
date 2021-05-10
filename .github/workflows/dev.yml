@@ -42,18 +42,16 @@ jobs:
         run:
           aws configure set preview.cloudfront true
       - name: Read app version
-        run: 
-          if [ -f package.json ]; then
-            echo "export app_version=$(
-            python - \<< EOF
-            import json
-            with open('package.json', 'r') as f:
-                datastore = json.load(f)
-            print(datastore["version"])
-            EOF
-            )" >> $GITHUB_ENV
-            exit 0
-          fi
+        run: | 
+          echo "export app_version=$(
+          python - \<< EOF
+          import json
+          with open('package.json', 'r') as f:
+              datastore = json.load(f)
+          print(datastore["version"])
+          EOF
+          )" >> $GITHUB_ENV
+          exit 0
      - name: print app version
        run:
          echo $app_version
