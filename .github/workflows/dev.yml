@@ -42,7 +42,7 @@ jobs:
         run:
           aws configure set preview.cloudfront true
       - name: Read app version
-        run: |
+        run: 
           if [ -f package.json ]; then
             echo "export app_version=$(
             python - \<< EOF
