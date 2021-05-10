@@ -42,9 +42,8 @@ jobs:
         run:
           aws configure set preview.cloudfront true
       - name: Read app version
-        run: | 
-          apt-get install jq -y
-          echo "export app_version=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV
+        run:
+          apt-get install jq -y && echo "export app_version=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV
      - name: print app version
        run:
          echo $app_version
