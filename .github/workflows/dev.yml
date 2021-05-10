@@ -39,7 +39,7 @@ jobs:
             await github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: env.app_version,
+              ref: $app_version,
               sha: context.sha
             })
   deploy-dev:
