@@ -1,0 +1,35 @@
+name: deploy-staging
+
+on:
+  push:
+    branches:
+      - deploy-staging
+
+jobs:
+  deploy-staging:
+    name: Deploy staging
+    runs-on: ubuntu-latest
+    environment: staging
+    env:
+        S3_BUILDS_BUCKET: ${{ secrets.S3_BUILDS_BUCKET }}
+        STAGING_S3_BUCKET: ${{ secrets.STAGING_S3_BUCKET }}
+        STAGING_CLOUDFRONT_ID: ${{ secrets.STAGING_CLOUDFRONT_ID }}
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-1
+      - name: Download artifact
+        run:
+          aws s3 cp s3://$S3_BUILDS_BUCKET/artifact.zip .
+      - name: Unzip artifact
+        run:
+          unzip artifact.zip
+      - name: Deploy app to staging
+        run:
+          aws s3 sync build/ s3://$STAGING_S3_BUCKET --delete
+      - name: Invalidate Cloudfront distribution
+        run:
+          aws cloudfront create-invalidation --distribution-id $STAGING_CLOUDFRONT_ID --paths '/*'
