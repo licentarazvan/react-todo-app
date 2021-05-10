@@ -44,7 +44,7 @@ jobs:
       - name: Read app version
         run: | 
           echo "export app_version=$(
-          python - \<< EOF
+          python - << EOF
           import json
           with open('package.json', 'r') as f:
               datastore = json.load(f)
