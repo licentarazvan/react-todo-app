@@ -56,8 +56,8 @@ jobs:
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: app-{{ env.app_version }}.zip
-          path: {{ env.app_version}}.zip
+          name: app-$app_version.zip
+          path: $app_version.zip
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -75,6 +75,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./{{ env.app_version }}.zip
-          asset_name: app-{{ env.app_version }}.zip
+          asset_path: ./$app_version.zip
+          asset_name: app-$app_version.zip
           asset_content_type: application/zip
