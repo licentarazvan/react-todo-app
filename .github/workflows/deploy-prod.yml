@@ -15,18 +15,24 @@ jobs:
         PROD_S3_BUCKET: ${{ secrets.PROD_S3_BUCKET }}
         PROD_CLOUDFRONT_ID: ${{ secrets.PROD_CLOUDFRONT_ID }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-1
+      - name: Get the app version
+        id: get-tag-version
+        run: |
+          app_version=$(cat prod-version.txt); echo "app_version=${app_version}" >> $GITHUB_ENV
       - name: Download artifact
         run:
-          aws s3 cp s3://$S3_BUILDS_BUCKET/artifact.zip .
+          aws s3 cp s3://$S3_BUILDS_BUCKET/$app_version.zip .
       - name: Unzip artifact
         run:
-          unzip artifact.zip
+          unzip $app_version.zip
       - name: Deploy app to prod
         run:
           aws s3 sync build/ s3://$PROD_S3_BUCKET --delete
