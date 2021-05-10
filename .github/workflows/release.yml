@@ -30,6 +30,7 @@ jobs:
     environment: staging
     env:
         S3_BUILDS_BUCKET: ${{ secrets.S3_BUILDS_BUCKET }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -56,6 +57,8 @@ jobs:
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: https://github.com/licentarazvan/react-todo-app/archive/refs/tags/
           asset_path: ./artifact.zip
