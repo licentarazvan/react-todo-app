@@ -41,7 +41,23 @@ jobs:
       - name: Configure AWS Cloudfront
         run:
           aws configure set preview.cloudfront true
-      - uses: actions/cache@v2
+      - name: Read app version
+        run: |
+          if [ -f package.json ]; then
+            echo "export app_version=$(
+            python - \<< EOF
+            import json
+            with open('package.json', 'r') as f:
+                datastore = json.load(f)
+            print(datastore["version"])
+            EOF
+            )" >> $GITHUB_ENV
+            exit 0
+          fi
+     - name: print app version
+       run:
+         echo $app_version
+     - uses: actions/cache@v2
         id: restore-build
         with:
           path: ./*
@@ -52,3 +68,9 @@ jobs:
       - name: Invalidate cache
         run:
           npm run invalidate-cache-dev
+      - name: Create release tag if needed
+        run:
+          if [[ $app_version != *-dev ]]; then
+            git tag -a v$app_version -m "Release v$app_version"
+            git push origin v$app_version
+          fi
