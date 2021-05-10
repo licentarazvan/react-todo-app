@@ -43,14 +43,8 @@ jobs:
           aws configure set preview.cloudfront true
       - name: Read app version
         run: | 
-          echo "export app_version=$(
-          python - << EOF
-          import json
-          with open('package.json', 'r') as f:
-              datastore = json.load(f)
-          print(datastore["version"])
-          EOF
-          )" >> $GITHUB_ENV
+          apt-get install jq -y
+          echo "export app_version=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV
      - name: print app version
        run:
          echo $app_version
