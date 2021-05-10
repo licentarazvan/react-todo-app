@@ -1,22 +1,40 @@
 {
   "name": "react-todo-app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.9.0"
+    "react-scripts": "4.0.3"
   },
   "dependencies": {
-    "bootstrap": "^3.4.1",
-    "immutability-helper": "^2.1.1",
-    "keycode-js": "^0.0.4",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "recompose": "^0.23.5"
+    "bootstrap": "^4.6.0",
+    "immutability-helper": "^3.1.1",
+    "keycode-js": "^3.1.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "recompose": "^0.30.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy-dev": "aws s3 sync build/ s3://$DEV_S3_BUCKET --delete",
+    "deploy-staging": "aws s3 sync build/ s3://$STAGING_S3_BUCKET --delete",
+    "deploy-prod": "aws s3 sync build/ s3://$PROD_S3_BUCKET --delete",
+    "invalidate-cache-dev": "aws cloudfront create-invalidation --distribution-id $DEV_CLOUDFRONT_ID --paths '/*'",
+    "invalidate-cache-staging": "aws cloudfront create-invalidation --distribution-id $STAGING_CLOUDFRONT_ID --paths '/*'",
+    "invalidate-cache-prod": "aws cloudfront create-invalidation --distribution-id $PROD_CLOUDFRONT_ID --paths '/*'"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
