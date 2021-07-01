@@ -13,6 +13,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-1
       - name: Get the tag version
         id: get-tag-version
         run: |
@@ -24,3 +30,6 @@ jobs:
           tag_name: ${{ env.tag_version }}
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      - name: Delete artifact
+        run:
+          aws s3 rm s3://$S3_BUILDS_BUCKET/${{ env.tag_version }}.zip
