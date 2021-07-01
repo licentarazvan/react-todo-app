@@ -32,4 +32,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - name: Delete artifact
         run:
-          aws s3 rm s3://$S3_BUILDS_BUCKET/${{ env.tag_version }}.zip
+          aws s3 rm s3://${{ secrets.S3_BUILDS_BUCKET }}/${{ env.tag_version }}.zip
