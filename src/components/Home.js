@@ -10,7 +10,7 @@ function Home() {
 
     const addTask = async (e) => {
         e.preventDefault();
-        await axios.post('https://8cjy6zcer1.execute-api.us-west-1.amazonaws.com/staging/api/post', {
+        await axios.post('https://1m8h6ifhx8.execute-api.us-west-1.amazonaws.com/dev/api/post', {
             name
         });
         window.location.href= '/';
@@ -18,13 +18,13 @@ function Home() {
     }
 
     const getTasks = async() => {
-        const response = await axios.get("https://8cjy6zcer1.execute-api.us-west-1.amazonaws.com/staging/api/get");
+        const response = await axios.get("https://1m8h6ifhx8.execute-api.us-west-1.amazonaws.com/dev/api/get");
         console.log(response);
         setTasks(response.data);
     }
 
     const deleteTask = async(name) => {
-        await axios.delete(`https://8cjy6zcer1.execute-api.us-west-1.amazonaws.com/staging/api/delete/:${name}`);
+        await axios.delete(`https://1m8h6ifhx8.execute-api.us-west-1.amazonaws.com/dev/delete/:${name}`);
         window.location.href= '/'
     }
 
