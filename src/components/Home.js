@@ -24,7 +24,7 @@ function Home() {
     }
 
     const deleteTask = async(name) => {
-        await axios.delete(`https://1m8h6ifhx8.execute-api.us-west-1.amazonaws.com/dev/api/delete/:${name}`);
+        await axios.delete(`https://1m8h6ifhx8.execute-api.us-west-1.amazonaws.com/dev/api/delete/${name}`);
         window.location.href= '/'
     }
 
