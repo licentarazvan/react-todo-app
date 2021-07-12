@@ -27,9 +27,9 @@ jobs:
         id: delete-tag-and-release
         with:
           delete_release: true # default: false
-          tag_name: ${{ env.tag_version }}
+          tag_name: v${{ env.tag_version }}
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - name: Delete artifact
         run:
-          aws s3 rm s3://${{ secrets.S3_BUILDS_BUCKET }} --exclude "*" --include "*${{ env.tag_version }}.zip*"
+          aws s3 rm s3://${{ secrets.S3_BUILDS_BUCKET }}/${{ env.tag_version }}.zip
